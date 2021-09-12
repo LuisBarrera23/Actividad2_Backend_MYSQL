@@ -48,6 +48,7 @@ app.get('/usuarios/:id', (req, res) => {
 
 
 //--------------------------Inicio de sesión--------------------------------
+//--------------------------adios xd--------------------------------
 app.post('/inicio', (req, res) => {
   const id = req.body.cui;
   const contra = req.body.password;
