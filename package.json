@@ -19,7 +19,7 @@
   "homepage": "https://github.com/LuisBarrera23/Actividad2_Backend_MYSQL#readme",
   "devDependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.12",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.12"
   }
 }

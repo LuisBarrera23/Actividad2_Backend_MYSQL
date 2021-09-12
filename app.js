@@ -15,5 +15,12 @@ app.use(bodyParser.json());
     password: 'rootpass',
     database: 'node20_mysql'
 });*/
+app.get('/', (req, res) => {
+  res.send('Welcome to my API!');
+});
+
+app.post('/registrar',(req,res)=>{
+  const sql='INSERT INTO '
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
