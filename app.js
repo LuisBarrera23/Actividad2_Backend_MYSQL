@@ -28,7 +28,7 @@ app.get('/usuarios', (req, res) => {
     if (results.length > 0) {
       res.json(results);
     } else {
-      res.send('Not result');
+      res.send('{"Respuesta":"Not Results"}');
     }
   });
 });
@@ -43,7 +43,7 @@ app.get('/usuarios/:id', (req, res) => {
     if (result.length > 0) {
       res.json(result);
     } else {
-      res.send('Not result');
+      res.send('{"Respuesta":"Not Results"}');
     }
   });
 });
@@ -127,11 +127,11 @@ app.put('/actualizar/:id', (req, res) => {
 
       connection.query(sql, error => {
         if (error) throw error;
-        res.send('Dato actualizado ;v!');
+        res.send('{"Respuesta":"Datos actualizados"}');
       });
     } else {
 
-      res.send('El usuario no existe');
+      res.send('{"Respuesta":"No Results"}');
     }
   });
 
@@ -152,11 +152,11 @@ app.delete('/eliminar/:id', (req, res) => {
 
       connection.query(sql, error => {
         if (error) throw error;
-        res.send('Dato eliminado');
+        res.send('{"Respuesta":"Usuario eliminado"}');
       });
     } else {
 
-      res.send('El usuario no existe');
+      res.send('{"Respuesta":"El usuario no existe"}');
     }
   });
 
