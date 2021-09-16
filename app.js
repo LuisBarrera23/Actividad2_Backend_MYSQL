@@ -3,6 +3,7 @@ var cors = require('cors')
 const mysql = require('mysql');
 
 const bodyParser = require('body-parser');
+const { json } = require('stream/consumers');
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -57,11 +58,21 @@ app.post('/inicio', (req, res) => {
   connection.query(sql, (error, results) => {
     if (error) throw error;
     if (results.length > 0) {
-      res.json(results);
-      res.send('{"Respuesta":"Rodolfo Morales"}');
+      
+      for (var i of results){
+        var respuesta={
+          "Respuesta":"True",
+          "reg_academico": i.reg_academico,
+          "nombre": i.nombre,
+          "apellidos": i.apellidos,
+          "contrasenia": i.contrasenia,
+          "correo": i.correo
+        }
+        res.json(respuesta);
+      }
       
     } else {
-      res.send('{"Respuesta":"Datos incorrectos"}');
+      res.send('{"Respuesta":"False"}');
     }
   });
 });
