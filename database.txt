@@ -5,3 +5,7 @@ port: 3306
 database: bveqykxdmvdy8lcdb6bh
 tabla:  db_usuarios
 reg_academico, nombre, apellidos, contrasenia, correo
+
+--------Tabla de cursos------
+tabla: db_cursos
+codigo, nombre, creditos, catedratico, seccion
