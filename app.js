@@ -1,11 +1,12 @@
 const express = require('express');
+var cors = require('cors')
 const mysql = require('mysql');
 
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-
+app.use(cors())
 app.use(bodyParser.json());
 
 // MySql
@@ -57,9 +58,10 @@ app.post('/inicio', (req, res) => {
     if (error) throw error;
     if (results.length > 0) {
       res.json(results);
+      res.send('{"Respuesta":"Rodolfo Morales"}');
       
     } else {
-      res.send('Datos incorrectos');
+      res.send('{"Respuesta":"Datos incorrectos"}');
     }
   });
 });
@@ -73,7 +75,7 @@ app.post('/registro', (req, res) => {
     if (error) throw error;
 
     if (result.length > 0) {
-      res.send('Usuario repetido');
+      res.send('{"Respuesta":"Usuario repetido"}');
     } else {
       const sql = 'INSERT INTO db_usuarios SET ?';
 
@@ -87,7 +89,7 @@ app.post('/registro', (req, res) => {
 
       connection.query(sql, nuevo, error => {
         if (error) throw error;
-        res.send('Usuario creado');
+        res.send('{"Respuesta":"Usuario creado"}');
       });
 
     }
