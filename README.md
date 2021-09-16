@@ -1,1 +1,0 @@
-# Actividad2_Backend_MYSQL
