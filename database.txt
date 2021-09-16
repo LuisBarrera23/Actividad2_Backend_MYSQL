@@ -1,0 +1,7 @@
+host: bveqykxdmvdy8lcdb6bh-mysql.services.clever-cloud.com
+user: uj99eg6zhlmwcvfs
+pass: HrGVm7IDGqidCb23VUsD
+port: 3306
+database: bveqykxdmvdy8lcdb6bh
+tabla:  db_usuarios
+reg_academico, nombre, apellidos, contrasenia, correo
