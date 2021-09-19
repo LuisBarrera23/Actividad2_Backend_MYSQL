@@ -50,7 +50,6 @@ app.get('/usuarios/:id', (req, res) => {
 
 
 //--------------------------Inicio de sesión--------------------------------
-//--------------------------adios xd--------------------------------
 app.post('/inicio', (req, res) => {
   const id = req.body.cui;
   const contra = req.body.password;
@@ -162,8 +161,56 @@ app.delete('/eliminar/:id', (req, res) => {
 
 });
 
+//----------------------------Mostrar todos-----------------------------------
+var profesor=[]
+var curso=[]
+function verificarProfesor(nombre) {
+  for (var i of profesor){
+    if (i==nombre){
+      return true
+    }  
+  }
+  return false
+}
+function verificarCurso(nombre) {
+  for (var i of curso){
+    if (i==nombre){
+      return true
+    }  
+  }
+  return false
+}
+app.get('/nombres', (req, res) => {
+  const sql = 'SELECT * FROM  db_cursos';
+  connection.query(sql, (error, results) => {
+    if (error) throw error;
+    if (results.length > 0) {
+      
+      for (var i of results){
+        var nombreProfesor=i.catedratico
+          repetido = false;
+          repetido=verificarProfesor(nombreProfesor);
+          if (repetido==false){
+            profesor.push(nombreProfesor);
+          }
+          var nombreCurso=i.nombre
+          repetido = false;
+          repetido=verificarCurso(nombreCurso);
+          if (repetido==false){
+            curso.push(nombreCurso);
+          }
 
-
+      }
+      var respuesta ={
+        "Profesores": profesor,
+        "Cursos" : curso
+      }
+      res.json(respuesta);
+    } else {
+      res.send('{"Respuesta":"Not Results"}');
+    }
+  });
+});
 
 
 // Check connect
