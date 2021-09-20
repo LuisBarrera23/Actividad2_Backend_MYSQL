@@ -105,10 +105,6 @@ app.post('/registro', (req, res) => {
     }
   });
 
-
-
-
-
 });
 
 //------------------------------------Actualizar-------------------------------
@@ -212,6 +208,38 @@ app.get('/nombres', (req, res) => {
   });
 });
 
+
+//------------------------------Crear Publicación---------------------------------- 
+app.post('/publicaciones', (req, res) => {
+
+  const sql = 'INSERT INTO db_publicaciones SET ?';
+
+  const nuevo = {
+    usuario: req.body.Usuario,
+    nombre_publicacion: req.body.Nombre,
+    mensaje: req.body.Mensaje,
+    fecha: req.body.Fecha
+  };
+
+  connection.query(sql, nuevo, error => {
+    if (error) throw error;
+    res.send('{"Respuesta":"Publicación creada"}');
+  });
+
+});
+
+//-------------------------Mostrar Todas las publicaciones-------------------------------
+app.get('/publicaciones', (req, res) => {
+  const sql = 'SELECT * FROM  db_publicaciones';
+  connection.query(sql, (error, results) => {
+    if (error) throw error;
+    if (results.length > 0) {
+      res.json(results);
+    } else {
+      res.send('{"Respuesta":"Not Results"}');
+    }
+  });
+});
 
 // Check connect
 connection.connect(error => {
