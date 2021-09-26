@@ -3,7 +3,6 @@ var cors = require('cors')
 const mysql = require('mysql');
 
 const bodyParser = require('body-parser');
-const { json } = require('stream/consumers');
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -49,7 +48,10 @@ app.get('/usuarios/:id', (req, res) => {
 });
 
 
+
 //--------------------------Inicio de sesión--------------------------------
+//--------------------------adios xd--------------------------------
+
 app.post('/inicio', (req, res) => {
   const id = req.body.cui;
   const contra = req.body.password;
@@ -76,19 +78,77 @@ app.post('/inicio', (req, res) => {
   });
 });
 
-//------------------------------Registro---------------------------------- 
-app.post('/registro', (req, res) => {
 
+
+
+//------------------------------Recuperar contraseña---------------------------------- 
+app.post('/recuperar', (req, res) => {
   const id = req.body.cui;
+  const email = req.body.email;
+  const sql = `SELECT * FROM db_usuarios WHERE (reg_academico ='${id}'  AND correo= '${email}')`;
+  connection.query(sql, (error, results) => {
+    if (error) throw error;
+    if (results.length > 0) {
+      
+      for (var i of results){
+        var respuesta={
+          "Respuesta":"True",
+          "reg_academico": i.reg_academico,
+          "nombre": i.nombre,
+          "apellidos": i.apellidos,
+          "contrasenia": i.contrasenia,
+          "correo": i.correo
+        }
+        res.json(respuesta);
+      }
+      
+    } else {
+      res.send('{"Respuesta":"False"}');
+    }
+  });
+});
+
+app.put('/recuperar/:id', (req, res) => {
+
+  const { id } = req.params;
+  
   const sql1 = `SELECT * FROM db_usuarios WHERE reg_academico = ${id}`;
   connection.query(sql1, (error, result) => {
     if (error) throw error;
 
     if (result.length > 0) {
-      res.send('{"Respuesta":"Usuario repetido"}');
+      const password = req.body.password;
+      const sql = `UPDATE db_usuarios SET  contrasenia='${password}' WHERE reg_academico =${id}`;
+
+      connection.query(sql, error => {
+        if (error) throw error;
+        res.send('{"Respuesta":"Datos actualizados","Valor":"True"}');
+      });
+    } else {
+
+      res.send('{"Respuesta":"No Results","Valor":"False"}');
+    }
+  });
+
+
+});
+
+
+//------------------------------Registro---------------------------------- 
+
+ 
+app.post('/registro', (req, res) => {
+ 
+  const id = req.body.cui;
+  const sql1 = `SELECT * FROM db_usuarios WHERE reg_academico = ${id}`;
+  connection.query(sql1, (error, result) => {
+    if (error) throw error;
+ 
+    if (result.length > 0) {
+      res.send('{"mensaje":"Usuario repetido", "data":"false"}');
     } else {
       const sql = 'INSERT INTO db_usuarios SET ?';
-
+ 
       const nuevo = {
         reg_academico: req.body.cui,
         nombre: req.body.name,
@@ -96,16 +156,21 @@ app.post('/registro', (req, res) => {
         contrasenia: req.body.password,
         correo: req.body.email
       };
-
+ 
       connection.query(sql, nuevo, error => {
         if (error) throw error;
-        res.send('{"Respuesta":"Usuario creado"}');
+        res.send('{"mensaje":"Usuario creado", "data":"true"}');
       });
-
+ 
     }
   });
-
+ 
+ 
+ 
+ 
+ 
 });
+
 
 //------------------------------------Actualizar-------------------------------
 app.put('/actualizar/:id', (req, res) => {
@@ -240,6 +305,8 @@ app.get('/publicaciones', (req, res) => {
     }
   });
 });
+
+
 
 // Check connect
 connection.connect(error => {
