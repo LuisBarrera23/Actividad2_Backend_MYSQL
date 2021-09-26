@@ -5,3 +5,13 @@ port: 3306
 database: bveqykxdmvdy8lcdb6bh
 tabla:  db_usuarios
 reg_academico, nombre, apellidos, contrasenia, correo
+
+----Tabla publicaciones -----
+tabla: db_publicaciones
+id_publ, usuario, nombre_publicacion, mensaje, fecha
+tiene contador autoincrementable
+fecha con formato(YYYY-MM-DD)
+
+---tabla de comentarios-----
+tabla: db_comentarios
+id_de_publ, id_usuario, comentario
