@@ -3,7 +3,7 @@ var cors = require('cors')
 const mysql = require('mysql');
 
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors())
@@ -306,6 +306,37 @@ app.get('/publicaciones', (req, res) => {
   });
 });
 
+
+//------------------------------Crear Comentario---------------------------------- 
+app.post('/comentario', (req, res) => {
+
+  const sql = 'INSERT INTO db_comentarios SET ?';
+
+  const nuevo = {
+    id_de_publ: req.body.id_de_publ,
+    id_usuario: req.body.id_usuario,
+    comentario: req.body.comentario
+  };
+
+  connection.query(sql, nuevo, error => {
+    if (error) throw error;
+    res.send('{"Respuesta":"Comentario creado"}');
+  });
+
+});
+
+//-------------------------Mostrar Todas los comentarios-------------------------------
+app.get('/todoscomentarios', (req, res) => {
+  const sql = 'SELECT * FROM  db_comentarios';
+  connection.query(sql, (error, results) => {
+    if (error) throw error;
+    if (results.length > 0) {
+      res.json(results);
+    } else {
+      res.send('{"Respuesta":"Not Results"}');
+    }
+  });
+});
 
 
 // Check connect
