@@ -24,6 +24,9 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "express":"*",
+    "body-parser":"*",
+    "cors": "^2.8.5",
+    "mysql":"*"
   }
 }
